@@ -21,7 +21,7 @@ font pango:Hack Nerd font Bold 14
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id fcitx -d
-exec --no-startup-id feh --bg-center ~/Documents/wallpaper/1204386.png
+exec --no-startup-id feh --bg-fill ~/Documents/wallpaper/simple.png
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -187,11 +187,11 @@ bar {
         status_command i3status
 	font pango:Hack Nerd font Bold 14
 	colors {
-        background #6d6d6d
+        background #424242
         statusline #ffffff
         separator #666666
 
-        inactive_workspace  #4c7899 #6d6d6d #ffffff
+        inactive_workspace  #4c7899 #424242 #ffffff
         active_workspace   #333333 #5f676a #ffffff
         focused_workspace #333333 #222222 #888888
         urgent_workspace   #2f343a #900000 #ffffff
@@ -200,7 +200,7 @@ bar {
 }
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #6d6d6d #6d6d6d #ffffff #6d6d6d   #6d6d6d
+client.focused          #424242 #424242 #ffffff #424242   #424242
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
