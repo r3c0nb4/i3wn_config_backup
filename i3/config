@@ -28,6 +28,7 @@ exec --no-startup-id feh --bg-fill ~/Documents/wallpaper/keqingandying.jpg
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id  ~/.config/polybar/init.sh
 exec_always --no-startup-id picom
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
@@ -157,6 +158,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 gaps inner 1
 gaps outer 1
+for_window [class="^.*"] border pixel 0
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -186,25 +188,25 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
- 	font pango:Hack Nerd font Bold 12
- 	colors {
-         background #1a1a1a
-         statusline #61ffdf
-         separator #666666
- 
-         inactive_workspace  #4c7899 #1a1a1a #ffffff
-         active_workspace   #333333 #5f676a #ffffff
-         focused_workspace #333333 #222222 #888888
-         urgent_workspace   #2f343a #900000 #ffffff
-         binding_mode       #2f343a #900000 #ffffff
-     }
-}
+#bar {
+#        status_command i3status
+# 	font pango:Hack Nerd font Bold 12
+# 	colors {
+#         background #4e4e4e
+#         statusline #61ffdf
+#         separator #ffffff
+# 
+#         focused_workspace #ff76d8 #ff76d8 #000000
+#         active_workspace   #ff83d9 #ff83d9 #ff83d9
+#         inactive_workspace  #81ffd5 #81ffd5 #000000
+#         urgent_workspace   #ff6161 #ff6161 #000000
+#         binding_mode       #2f343a #900000 #ffffff
+#     }
+#}
 
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #1a1a1a #1a1a1a #ffffff #1a1a1a   #1a1a1a
+client.focused          #4e4e4e #4e4e4e #ffffff #1a1a1a   #1a1a1a
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
