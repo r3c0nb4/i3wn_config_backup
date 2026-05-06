@@ -17,8 +17,8 @@
 ;==========================================================
 
 [colors]
-background = #334D4D4D
-background-alt = #334D4D4D
+background = #664D4D4D
+background-alt = #664D4D4D
 foreground = #BB5C8C6
 primary = #02f5d7
 secondary = #fc74cd
@@ -46,9 +46,9 @@ padding-right = 1
 module-margin = 1
 
 separator = |
-separator-foreground = #00000000
+separator-foreground = ${colors.disabled}
 
-font-0 = Terminess Nerd Font:style=Bold:size=15;2
+font-0 = monospace;2
 
 modules-left = xworkspaces xwindow
 modules-right = battery filesystem pulseaudio xkeyboard memory cpu wlan eth date
@@ -69,6 +69,14 @@ wm-restack = i3
 
 ; override-redirect = true
 
+; This module is not active by default (to enable it, add it to one of the
+; modules-* list above).
+; Please note that only a single tray can exist at any time. If you launch
+; multiple bars with this module, only a single one will show it, the others
+; will produce a warning. Which bar gets the module is timing dependent and can
+; be quite random.
+; For more information, see the documentation page for this module:
+; https://polybar.readthedocs.io/en/stable/user/modules/tray.html
 [module/systray]
 type = internal/tray
 
@@ -96,48 +104,35 @@ label-empty-padding = 1
 
 [module/xwindow]
 type = internal/xwindow
-label =   %title:0:60:...%
+label = %title:0:60:...%
 
 [module/battery]
 type = internal/battery
 
+; This is useful in case the battery never reports 100% charge
+; Default: 100
 full-at = 99
+
+; format-low once this charge percentage is reached
+; Default: 10
+; New in version 3.6.0
 low-at = 5
 
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
 battery = BAT0
 adapter = ADP1
 
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
 poll-interval = 5
-
-; 充电中
-format-charging = <ramp-capacity>  <label-charging>
-label-charging = %percentage%%
-label-charging-foreground = ${colors.foreground}
-
-; 放电中
-format-discharging = <ramp-capacity>  <label-discharging>
-label-discharging = %percentage%%
-label-discharging-foreground = ${colors.foreground}
-
-; 满电
-format-full = <label-full>
-format-full-prefix = "  "
-format-full-prefix-foreground = ${colors.primary}
-label-full = %percentage%%
-label-full-foreground = ${colors.foreground}
-
-; 低电量
-format-low = <ramp-capacity>  <label-low>
-label-low = %percentage%%
-label-low-foreground = ${colors.alert}
-
-; 电量阶梯图标（从空到满）
-ramp-capacity-foreground = ${colors.primary}
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
 
 [module/filesystem]
 type = internal/fs
@@ -145,32 +140,29 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = %{F#02F5D7}  %{F-}%mountpoint% %percentage_used%%
+label-mounted = %{F#02F5D7}%mountpoint%%{F-} %percentage_used%%
 
-label-unmounted =   %mountpoint% not mounted
+label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.disabled}
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume-prefix = "  "
+format-volume-prefix = "VOL "
 format-volume-prefix-foreground = ${colors.primary}
 format-volume = <label-volume>
 
 label-volume = %percentage%%
 
-label-muted = "  muted"
+label-muted = muted
 label-muted-foreground = ${colors.disabled}
 
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = "  "
-format-prefix-foreground = ${colors.primary}
-
 label-layout = %layout%
-label-layout-foreground = ${colors.foreground}
+label-layout-foreground = ${colors.primary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
@@ -180,14 +172,14 @@ label-indicator-background = ${colors.secondary}
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "  "
+format-prefix = "RAM "
 format-prefix-foreground = ${colors.primary}
 label = %percentage_used:2%%
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "  "
+format-prefix = "CPU "
 format-prefix-foreground = ${colors.primary}
 label = %percentage:2%%
 
@@ -196,17 +188,17 @@ type = internal/network
 interval = 5
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-label-disconnected = %{F#02f5d7}󰖪 %{F-}%ifname% %{F#707880}disconnected
+label-disconnected = %{F#02f5d7}%ifname%%{F#707880} disconnected
 
 [module/wlan]
 inherit = network-base
 interface-type = wireless
-label-connected = %{F#02f5d7}  %{F-}%essid% %local_ip%
+label-connected = %{F#02f5d7}%ifname%%{F-} %essid% %local_ip%
 
 [module/eth]
 inherit = network-base
 interface-type = wired
-label-connected = %{F#02f5d7}󰈀 %{F-}%local_ip%
+label-connected = %{F#02f5d7}%ifname%%{F-} %local_ip%
 
 [module/date]
 type = internal/date
@@ -215,8 +207,8 @@ interval = 1
 date = %H:%M
 date-alt = %Y-%m-%d %H:%M:%S
 
-label =   %date%
-label-foreground = ${colors.foreground}
+label = %date%
+label-foreground = ${colors.primary}
 
 [settings]
 screenchange-reload = true
